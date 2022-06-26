@@ -1,6 +1,7 @@
 package com.cos.photogramstart.web;
 
 import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.AuthService;
 import com.cos.photogramstart.web.dto.auth.SignupDto;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,7 @@ public class AuthController {
     //회원가입 -> /auth/signup -> /auth/signin 리턴됨
     // 회원가입 클릭했는데 아무것도 안됨
     @PostMapping("/auth/signup")  // 오류 모아둠 getFieldErrors collection에 모아둠
-    public @ResponseBody String signup(@Valid SignupDto signupDto, BindingResult bindingResult){ // key=value 형식으로 들어옴 (x-www-form-urlencoded 방식)
+    public String signup(@Valid SignupDto signupDto, BindingResult bindingResult){ // key=value 형식으로 들어옴 (x-www-form-urlencoded 방식)
         if (bindingResult.hasErrors()){ //blank, username길이 넘어가면
             Map<String,String> erroMap = new HashMap<>();
             for (FieldError error:bindingResult.getFieldErrors()){
@@ -54,7 +55,9 @@ public class AuthController {
                 System.out.println(error.getDefaultMessage());
                 System.out.println("======================================");
             }
-            return "오류남";
+            throw new CustomValidationException("유효성 검사 실패함",erroMap);
+//            throw new RuntimeException("유효성 검사 실패함");
+//            return "오류남";  //오류가 나면 exception 발동
         }else{
             User user = signupDto.toEntity();
             User userEntity = authService.회원가입(user);
