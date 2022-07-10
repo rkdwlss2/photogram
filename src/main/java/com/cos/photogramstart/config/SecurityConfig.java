@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //인증 안간 곳은 login 페이지로 이동
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/","/user/**","/image/**","/subscribe/**","/comment/**")
+                .antMatchers("/","/user/**","/image/**","/subscribe/**","/comment/**","/api/**")
                 .authenticated()// 인증 필요해
                 .anyRequest().permitAll()
                 .and()

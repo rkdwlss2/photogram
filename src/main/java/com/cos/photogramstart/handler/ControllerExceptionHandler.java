@@ -1,5 +1,6 @@
 package com.cos.photogramstart.handler;
 
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -34,6 +35,18 @@ public class ControllerExceptionHandler {
         // 2. Ajax 통신 - CMRespDto
         // 3. Android 통신 - CMRespDto
         return new ResponseEntity<CMRespDto<?>>(new CMRespDto<>(-1,e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);
+//        return new CMRespDto<Map<String,String>>(-1,e.getMessage(),e.getErrorMap()); //message를 리턴함
+    }
+
+
+    @ExceptionHandler(CustomApiException.class) //RuntimeException이 일어나는 모든 일에 캐칭
+    public ResponseEntity<?> apiException(CustomApiException e){
+        System.out.println("==================================나 실행됨==============================");
+        // CMRespDto, Script 비교
+        // 1. 클라이언트에게 응답할때는 Script  좋음.
+        // 2. Ajax 통신 - CMRespDto
+        // 3. Android 통신 - CMRespDto
+        return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),null),HttpStatus.BAD_REQUEST);
 //        return new CMRespDto<Map<String,String>>(-1,e.getMessage(),e.getErrorMap()); //message를 리턴함
     }
 }
