@@ -5,10 +5,12 @@ import com.cos.photogramstart.domain.user.User;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+
 
 @Data
 public class ImageUploadDto {
-    private MultipartFile file;
+    private MultipartFile file; // multipartFile 은 안됨
     private String caption;
 
     public Image toEntity(String postImageUrl, User user){

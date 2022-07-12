@@ -23,7 +23,12 @@ public class ControllerExceptionHandler {
         // 1. 클라이언트에게 응답할때는 Script  좋음.
         // 2. Ajax 통신 - CMRespDto
         // 3. Android 통신 - CMRespDto
-        return Script.back(e.getErrorMap().toString());
+        if (e.getErrorMap()==null){
+            return Script.back(e.getMessage());
+        }else{
+            return Script.back(e.getErrorMap().toString());
+        }
+
 //        return new CMRespDto<Map<String,String>>(-1,e.getMessage(),e.getErrorMap()); //message를 리턴함
     }
 
@@ -34,6 +39,7 @@ public class ControllerExceptionHandler {
         // 1. 클라이언트에게 응답할때는 Script  좋음.
         // 2. Ajax 통신 - CMRespDto
         // 3. Android 통신 - CMRespDto
+
         return new ResponseEntity<CMRespDto<?>>(new CMRespDto<>(-1,e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);
 //        return new CMRespDto<Map<String,String>>(-1,e.getMessage(),e.getErrorMap()); //message를 리턴함
     }
@@ -46,6 +52,9 @@ public class ControllerExceptionHandler {
         // 1. 클라이언트에게 응답할때는 Script  좋음.
         // 2. Ajax 통신 - CMRespDto
         // 3. Android 통신 - CMRespDto
+
+
+        System.out.println("나 발동 되냐??????????????????");
         return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),null),HttpStatus.BAD_REQUEST);
 //        return new CMRespDto<Map<String,String>>(-1,e.getMessage(),e.getErrorMap()); //message를 리턴함
     }
