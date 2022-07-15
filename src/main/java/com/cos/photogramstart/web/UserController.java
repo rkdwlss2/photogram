@@ -21,7 +21,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public String profile(@PathVariable int id, Model model){
         User userEntity = userService.회원프로필(id);
-        model.addAttribute("images",null);
+        model.addAttribute("user",userEntity);
         return "user/profile";
     }
 

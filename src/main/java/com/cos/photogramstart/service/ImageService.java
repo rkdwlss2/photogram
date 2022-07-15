@@ -43,7 +43,7 @@ public class ImageService {
         Image image = imageUploadDto.toEntity(imageFileName,principalDetails.getUser()); // UUID + 파일이름.jpg
         Image imageEntity = imageRepository.save(image);
 
-        System.out.println(imageEntity);
+        //System.out.println(imageEntity);
 
     }
 }
