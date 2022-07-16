@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UserProfileDto {
-    private int isPageOwner; //안만들고 해결할수 있지만
+    private boolean pageOwnerState; //안만들고 해결할수 있지만 is 붙으면 파싱 안됨
+    private int imageCount;
+    private boolean subscribeState;
+    private int subscribeCount;
     private User user;
 }
