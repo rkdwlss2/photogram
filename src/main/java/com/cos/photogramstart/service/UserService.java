@@ -20,6 +20,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
+    @Transactional(readOnly = true) // 영속성 컨텍스트 일을 적게 하는 방법임 변경 감지 계속 안함  더티 체킹
     public User 회원프로필(int userId){
         // select * from image where userId = :userId; 쿼리로 하면 이렇게 하면됨
         User userEntity = userRepository.findById(userId).orElseThrow(()->{
