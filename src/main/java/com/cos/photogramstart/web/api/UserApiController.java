@@ -37,9 +37,9 @@ public class UserApiController {
             Map<String,String> erroMap = new HashMap<>();
             for (FieldError error:bindingResult.getFieldErrors()){
                 erroMap.put(error.getField(),error.getDefaultMessage());
-                System.out.println("======================================");
-                System.out.println(error.getDefaultMessage());
-                System.out.println("======================================");
+//                System.out.println("======================================");
+//                System.out.println(error.getDefaultMessage());
+//                System.out.println("======================================");
             }
             throw new CustomValidationApiException("유효성 검사 실패함",erroMap);
 //            throw new RuntimeException("유효성 검사 실패함");
@@ -47,7 +47,7 @@ public class UserApiController {
         }else{
             User userEntity = userService.회원수정(id,userUpdateDto.toEntity());
             principalDetails.setUser(userEntity);
-            return new CMRespDto<>(1,"회원수정완료",userEntity);
+            return new CMRespDto<>(1,"회원수정완료",userEntity); //응답시에 userEntity의 모든 getter 함수가 호출되고 json 으로 ㅍ파싱되어 응답한다.
         }
 
 //        System.out.println(userUpdateDto);

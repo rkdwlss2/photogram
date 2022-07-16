@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user/{id}")
-    public String profile(@PathVariable int id, Model model){
+    public String profile(@PathVariable int id, Model model){ //현재 페이지의 주인인지 체크 해야됨
         User userEntity = userService.회원프로필(id);
         model.addAttribute("user",userEntity);
         return "user/profile";
@@ -28,12 +28,12 @@ public class UserController {
     @GetMapping("/user/{id}/update")
     public String update(@PathVariable int id, @AuthenticationPrincipal PrincipalDetails principalDetails){
         //1추천
-        System.out.println("세션 정보"+principalDetails.getUser());
+//        System.out.println("세션 정보"+principalDetails.getUser());
 
         //2극혐혐
-        Authentication auth=SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-        System.out.println("직접 찾은 세션 정보 : "+mPrincipalDetails.getUser());
+//        Authentication auth=SecurityContextHolder.getContext().getAuthentication();
+//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
+//        System.out.println("직접 찾은 세션 정보 : "+mPrincipalDetails.getUser());
 
 //        model.addAttribute("principal",mPrincipalDetails.getUser());
         return "user/update";

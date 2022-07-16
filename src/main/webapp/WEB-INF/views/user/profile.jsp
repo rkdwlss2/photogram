@@ -28,8 +28,14 @@
 			<div class="name-group">
 				<h2>${user.name}</h2>
 
-				<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
-				<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+				<c:choose>
+					<c:when test="${principal.user.id==user.id}">
+						<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
+					</c:when>
+					<c:otherwise>
+						<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+					</c:otherwise>
+				</c:choose>
 				<button class="modi" onclick="popup('.modal-info')">
 					<i class="fas fa-cog"></i>
 				</button>
@@ -37,7 +43,7 @@
 
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>3</span>
+					<li><a href=""> 게시물<span>${user.images.size()}</span>
 					</a></li>
 					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>2</span>
 					</a></li>
