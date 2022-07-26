@@ -21,6 +21,7 @@ public class ImageApiController {
 
     @GetMapping("/api/image")
     public ResponseEntity<?> imageStory(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        System.out.println(principalDetails.getUser().getId());
         List<Image> images = imageService.이미지스토리(principalDetails.getUser().getId());
         return new ResponseEntity<>(new CMRespDto<>(1,"성공",images), HttpStatus.OK);
     }
