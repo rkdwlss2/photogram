@@ -7,6 +7,12 @@
 	(5) 댓글삭제
  */
 
+// (0) 현재 로그인한 사용자 아이디
+let principalId = $("#principalId").val();
+
+// alert("사용자 아이디 : "+principalId);
+
+
 let page = 0;
 
 // (1) 스토리 로드하기
@@ -63,19 +69,25 @@ function getStoryItem(image) {
       <p>${image.caption}</p>
     </div>
 
-    <div id="storyCommentList-${image.id}">
-
-      <div class="sl__item__contents__comment" id="storyCommentItem-1"">
+    <div id="storyCommentList-${image.id}">`;
+	image.comments.forEach((comment)=>{
+		item += `<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
         <p>
-          <b>Lovely :</b> 부럽습니다.
-        </p>
+          <b>${comment.user.username} :</b> ${comment.content}
+        </p>`;
 
-        <button>
-          <i class="fas fa-times"></i>
-        </button>
+		if (principalId==comment.user.id){
+			item += `<button onclick="deleteComment(${comment.id})">
+         				 <i class="fas fa-times"></i>
+        			</button>`;
+		}
 
-      </div>
 
+		item+=      `</div>`;
+	});
+
+
+	item+=`
     </div>
 
     <div class="sl__item__input">
@@ -95,7 +107,7 @@ $(window).scroll(() => {
 	// console.log("윈도우 높이",$(window).height);
 
 	let checkNum = $(window).scrollTop() - ($(document).height() - $(window).height());
-	console.log(checkNum);
+	// console.log(checkNum);
 
 	if (checkNum<1&&checkNum>-1){
 		page++;
@@ -178,26 +190,40 @@ function addComment(imageId) {
 		dataType:"json"
 	}).done(res=>{
 		console.log("성공",res);
+
+		let comment = res.data;
+
+	let content = `
+		  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+			<p>
+			  <b>${comment.user.username} :</b>
+			  ${comment.content}
+			</p>
+			<button onclick="deleteComment(${comment.id})"><i class="fas fa-times"></i></button>
+		  </div>
+		`;
+		commentList.prepend(content);
 	}).fail(error =>{
 		console.log("오류",error);
 	});
 
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
-			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
-			    </p>
-			    <button><i class="fas fa-times"></i></button>
-			  </div>
-	`;
-	commentList.prepend(content);
-	commentInput.val("");
+
+	commentInput.val(""); //인풋 필드를 깨끗하게 비워준다.
 }
 
 // (5) 댓글 삭제
-function deleteComment() {
-
+function deleteComment(commentId) {
+	$.ajax({
+		type: "delete",
+		url: `/api/comment/${commentId}`,
+		dataType: "json"
+	}).done(res=>{
+		console.log("성공",res);
+		$(`#storyCommentItem-${commentId}`).remove();
+	}).fail(error=>{
+		console.log("오류",error.responseJSON.data.content);
+		alert("오류",error.responseJSON.data.content);
+	});
 }
 
 
