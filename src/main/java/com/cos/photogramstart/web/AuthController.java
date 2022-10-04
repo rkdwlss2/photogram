@@ -47,24 +47,13 @@ public class AuthController {
     // 회원가입 클릭했는데 아무것도 안됨
     @PostMapping("/auth/signup")  // 오류 모아둠 getFieldErrors collection에 모아둠
     public String signup(@Valid SignupDto signupDto, BindingResult bindingResult){ // key=value 형식으로 들어옴 (x-www-form-urlencoded 방식)
-        if (bindingResult.hasErrors()){ //blank, username길이 넘어가면
-            Map<String,String> erroMap = new HashMap<>();
-            for (FieldError error:bindingResult.getFieldErrors()){
-                erroMap.put(error.getField(),error.getDefaultMessage());
-                System.out.println("======================================");
-                System.out.println(error.getDefaultMessage());
-                System.out.println("======================================");
-            }
-            throw new CustomValidationException("유효성 검사 실패함",erroMap);
-//            throw new RuntimeException("유효성 검사 실패함");
-//            return "오류남";  //오류가 나면 exception 발동
-        }else{
+
             User user = signupDto.toEntity();
-            User userEntity = authService.회원가입(user);
-            System.out.println(userEntity);
+            authService.회원가입(user);
+//            System.out.println(userEntity);
             return "auth/signin"; //회원가입이 성공하면 로그인 페이지로 이동
 
-        }
+
 //
 //        //        if (signupDto.getUsername().length()>20){  //validation 체크
 ////            System.out.printf("너 길이 초과했어");

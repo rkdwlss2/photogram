@@ -45,6 +45,24 @@ public class User {
 
     private LocalDateTime createDate;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", website='" + website + '\'' +
+                ", bio='" + bio + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender='" + gender + '\'' +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", role='" + role + '\'' +
+                ", createDate=" + createDate +
+                '}';
+    }
+
     //Db에 넣지말라는걸 알려 줘야함
     // User 를 select할때 해당 User id로 등록된 image들을 다 가져와
     // fetchtype.LAZY 해당 된 이미지를 다 가져와가 아니라

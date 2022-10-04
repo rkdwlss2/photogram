@@ -184,7 +184,7 @@ function addComment(imageId) {
 
 	$.ajax({
 		type: "post",
-		url: `/api/comment`,
+		url: "/api/comment",
 		data: JSON.stringify(data),
 		contentType: "application/json; charset=utf-8",
 		dataType:"json"
@@ -205,6 +205,7 @@ function addComment(imageId) {
 		commentList.prepend(content);
 	}).fail(error =>{
 		console.log("오류",error);
+		alert(error.responseJSON.data.content);
 	});
 
 
