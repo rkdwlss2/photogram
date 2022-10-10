@@ -26,7 +26,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //번호 증가 전략이 데이터 베이스를 따라 갑니다.
     private int id; // 서비스 하는 프로그램이 아니라서 int로도 충분함
 
-    @Column(length = 20,unique = true)
+    @Column(length = 100,unique = true) // oAuth2 로그인을 통해 칼럼 늘리기
     private String username;
     @Column(nullable = false)
     private String password;

@@ -4,21 +4,30 @@ import com.cos.photogramstart.domain.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Data
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private static final long serialVersionUID = 1L;
 
     private User user;
 
+    private Map<String,Object> attributes;
+
     public PrincipalDetails(User user){
         this.user=user;
     }
+
+    public PrincipalDetails(User user, Map<String,Object> attributes){
+        this.user = user;
+    }
+
 
     //권한 : 한개가 아닐 수 있음.(3개 이상의 권한)
     @Override
@@ -56,5 +65,15 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled() {//계정 활성화 되었니? 10년동안 안쓰면
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes; // id : 12312312 name : 강명진, email: rkdwlss2@gmail.com
+    }
+
+    @Override
+    public String getName() {
+        return (String) attributes.get("name");
     }
 }
