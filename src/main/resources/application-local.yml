@@ -1,0 +1,49 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: utf-8
+      enabled: true
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://${mariadbUrl}/photogram?serverTimezone=Asia/Seoul
+    username: ${mariadbId}
+    password: ${mariadbPassword}
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: none   #insert 된 데이터 다 사라짐 create , update, none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+
+  security:
+    user:
+      name: test
+      password: 1234
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 749503486471668
+            client-secret: daccbd5d6058c8f756dea05606665381
+            scope:
+              - public_profile
+              - email
+
+file:
+  path: C:/workspace/springbootwork/upload/
